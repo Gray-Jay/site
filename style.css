@@ -6,24 +6,60 @@
 	  background-attachment: fixed;
 	  color: white;
 	  position: relative;
-	  z-index: 1;
 	}
+	
+li.navbar {
+	background-image: url(https://thumbs.dreamstime.com/t/futuristic-abstract-programming-dark-code-seamless-flythrough-alpha-channel-futuristic-abstract-programming-dark-digital-code-134131380.jpg);
+	padding: 5px 5px;
+	position: fixed;
+	font-size: 24px;
+	display: inline-block;
+  width: 65%;
+	z-index: 11;
+	left: 0;
+	right: 0;
+	margin: 0 auto;
+	border: 3px solid black;
+	text-align: center;
+	border-width: 65%;
+	top: 20%;
+	}
+span.dropdowncontent {
+		display: none;
+		position: relative;
+		padding: 2%;
+		left: 33%;
+	} 
+span.dropdown:hover .dropdowncontent {
+	display: block;
+	position: absolute;
+}
+
+a.navbarlinks:link {
+color: deepskyblue;
+}
+a.navbarlinks:visited {
+color: deepskyblue;
+}
+a.navbarlinks:hover {
+color: red;
+}
 
 	div.emailme {
 	  display: inline-block;
-	  position: relative;
+	  position: fixed;
 	}
 
 	#banner p:first-child {
 	  font-family: Times, sans-serif;
 	  font-weight: Bold;
 	  color: #3715b3;
-	  text-align: center;
 	  font-size: 55px;
 	  text-shadow: 2px 2px 7px pink;
 	  background-color: black;
 	  border-radius: 15%;
-	  width: 55%;
+	  width: 57%;
+		text-align: center;
 	  left: 0;
 	  right: 0;
 	  position: fixed;
@@ -31,18 +67,48 @@
 		z-index: 10;
 		bottom: 80%;
 	}
+	
+div.profilepic {
+	  content: url(https://live.staticflickr.com/2739/5699505622_4f2d1c51f1_n.jpg);
+	  width: 25%;
+	  height: 25%;
+	  max-width: 155px;
+	  max-height: 155px;
+		position: relative;
+		display: inline-block;
+		clear: both;
 
+	}
+	p.jobtitle {
+	  animation: jobtitle 0.5s infinite;
+	  animation-direction: alternate;
+	  font-weight: bolder;
+	  font-size: 44px;
+	  text-decoration: underline;
+	  text-align: center;
+	  position: absolute;
+		top: 15%;
+		left: 20%;
+		min-width: 70%;
+		display: inline-block;
+	}
+nav{
+	min-width: 50%;
+	top: 10%;
+	z-index: 11;
+	position: fixed;
+}
 	#banner p:nth-child(2) {
 	  background-image: url(https://www.wallpaperup.com/uploads/wallpapers/2016/08/08/1005002/c4191c2dd3323ca67a715d3be1b0578d-700.jpg);
 	  width: 100%;
-		height: 27%;
+		height: 33%;
 		padding: 0;
 	  position: fixed;
 		display: inline-block;
-		font-size: .01;
+		font-size: 0.01;
 		color: rgba(0, 0, 0, 0.1);
 		z-index: 9;
-		bottom: 70%;
+		bottom: 65%;
 		left: 0%;
 	}
 
@@ -84,16 +150,6 @@
 	  font-family: Arial, Sans-Serif;
 	}
 
-	p.jobtitle {
-	  animation: jobtitle 0.5s infinite;
-	  animation-direction: alternate;
-	  font-weight: bolder;
-	  font-size: 155%;
-	  text-decoration: underline;
-	  text-align: center;
-	  font-size: 44px;
-	  position: relative;
-	}
 
 	@keyframes jobtitle {
 	  from {
@@ -103,15 +159,6 @@
 	  to {
 	    color: gray;
 	  }
-
-	}
-
-	div.profilepic {
-	  content: url(https://cdn2.iconfinder.com/data/icons/avatars-99/62/avatar-370-456322-512.png);
-	  width: 25%;
-	  height: 25%;
-	  max-width: 155px;
-	  max-height: 155px;
 
 	}
 
