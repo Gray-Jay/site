@@ -1,25 +1,56 @@
 	body {
 	  background-image: url("https://wallup.net/wp-content/uploads/2019/09/448484-space-galaxy-planets-stars-universe-colors.jpg");
+	  background-position: center bottom;
 	  background-size: cover;
 	  background-repeat: no-repeat;
 	  background-attachment: fixed;
 	  color: white;
+	  position: relative;
+	  z-index: 1;
 	}
 
-	h1 {
+	div.emailme {
+	  display: inline-block;
+	  position: relative;
+	}
+
+	#banner p:first-child {
 	  font-family: Times, sans-serif;
 	  font-weight: Bold;
 	  color: #3715b3;
 	  text-align: center;
 	  font-size: 55px;
 	  text-shadow: 2px 2px 7px pink;
+	  background-color: black;
+	  border-radius: 15%;
+	  width: 55%;
+	  left: 0;
+	  right: 0;
+	  position: fixed;
+	  margin: 0 auto;
+		z-index: 10;
+		bottom: 80%;
+	}
+
+	#banner p:nth-child(2) {
+	  background-image: url(https://www.wallpaperup.com/uploads/wallpapers/2016/08/08/1005002/c4191c2dd3323ca67a715d3be1b0578d-700.jpg);
+	  width: 100%;
+		height: 27%;
+		padding: 0;
+	  position: fixed;
+		display: inline-block;
+		font-size: .01;
+		color: rgba(0, 0, 0, 0.1);
+		z-index: 9;
+		bottom: 70%;
+		left: 0%;
 	}
 
 	#parent p:first-child {
 	  color: lightblue;
 	  font-weight: bold;
 	  height: 100px;
-	  width: 255px;
+	  width: 69%;
 	  overflow: scroll;
 	  overflow-x: hidden;
 	  text-align: left;
@@ -28,11 +59,12 @@
 	  background-size: cover;
 	  z-index: 2;
 	  position: relative;
+	  margin-left: -43px;
 	}
 
 	#parent p:nth-child(2) {
 	  color: #209ad6;
-	  top: 26%;
+	  top: 33%;
 	  right: 4%;
 	  position: fixed;
 	  font-size: 20px;
@@ -58,12 +90,14 @@
 	  font-weight: bolder;
 	  font-size: 155%;
 	  text-decoration: underline;
+	  text-align: center;
+	  font-size: 44px;
 	  position: relative;
 	}
 
 	@keyframes jobtitle {
 	  from {
-	    color: lightyellow;
+	    color: black;
 	  }
 
 	  to {
@@ -76,6 +110,8 @@
 	  content: url(https://cdn2.iconfinder.com/data/icons/avatars-99/62/avatar-370-456322-512.png);
 	  width: 25%;
 	  height: 25%;
+	  max-width: 155px;
+	  max-height: 155px;
 
 	}
 
@@ -104,6 +140,8 @@
 	  width: 33%;
 	  height: 33%;
 	  display: inline-block;
+	  z-index: 2;
+	  position: relative;
 	}
 
 	div.certs1 {
@@ -111,4 +149,6 @@
 	  width: 33%;
 	  height: 33%;
 	  display: inline-block;
+	  z-index: 2;
+	  position: relative;
 	}
