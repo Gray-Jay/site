@@ -57,6 +57,7 @@
       height: 315px;
     }
   </style>
+  <script src="https://www.youtube.com/iframe_api"></script>
 </head>
 <body>
   <div class="navbar">
@@ -70,11 +71,41 @@
     </div>
   </div>
   <div class="video-container">
-    <iframe width="560" height="315" src="https://www.youtube.com/embed/OcWEYDddJ7Q" frameborder="0" allowfullscreen></iframe>
+    <div id="player"></div>
   </div>
   <div class="search-bar">
     <input type="text" placeholder="Search">
     <button type="submit">Search</button>
   </div>
+  <script>
+    var player;
+    function onYouTubeIframeAPIReady() {
+      player = new YT.Player('player', {
+        height: '315',
+        width: '560',
+        videoId: 'OcWEYDddJ7Q',
+        events: {
+          'onStateChange': onPlayerStateChange
+        }
+      });
+    }
+
+    function onPlayerStateChange(event) {
+      const body = document.body;
+      const videoContainer = document.querySelector('.video-container');
+
+      if (event.data === YT.PlayerState.PLAYING) {
+        // When the video is playing
+        videoContainer.style.width = '75%';
+        videoContainer.style.height = '75%';
+        body.style.filter = 'blur(5px)';
+      } else if (event.data === YT.PlayerState.PAUSED || event.data === YT.PlayerState.ENDED) {
+        // When the video is paused or ended
+        videoContainer.style.width = '560px';
+        videoContainer.style.height = '315px';
+        body.style.filter = 'none';
+      }
+    }
+  </script>
 </body>
 </html>
