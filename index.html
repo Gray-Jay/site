@@ -14,8 +14,6 @@
       width: 100%;
       height: 100%;
       background-image: url('https://i.imgur.com/VdeFST7.jpg');
-      background-size: cover;
-      background-repeat: no-repeat;
       z-index: -1;
     }
     .blur-bg {
@@ -61,13 +59,14 @@
       text-align: center;
       z-index: 1;
     }
-    .video-row {
-      display: flex;
-      justify-content: space-between;
-    }
     .video-container {
-      flex: 1;
-      padding: 0 5px; /* Adjust padding as needed */
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 560px;
+      height: 315px;
+      z-index: 0;
     }
   </style>
   <script src="https://www.youtube.com/iframe_api"></script>
@@ -84,26 +83,18 @@
       </div>
     </div>
   </div>
-  <div class="video-row">
-    <div class="video-container" id="player1"></div>
-    <div class="video-container" id="player2"></div>
-    <!-- More video containers here -->
-  </div>
+  <div class="video-container" id="player"></div>
   <div class="search-bar">
     <input type="text" placeholder="Search">
     <button type="submit">Search</button>
   </div>
   <script>
-    var viewportWidth = window.innerWidth; // Get the viewport width
-    var padding = 10; // Padding or margin between videos, adjust as needed
-    var videoWidth = (viewportWidth - padding * 4) / 5; // Calculate the width for each video
-    var videoHeight = videoWidth * (9 / 16); // Calculate the height based on a 16:9 aspect ratio
-
-    function createPlayer(videoId, elementId) {
-      return new YT.Player(elementId, {
-        height: videoHeight.toString(),
-        width: videoWidth.toString(),
-        videoId: videoId,
+    var player;
+    function onYouTubeIframeAPIReady() {
+      player = new YT.Player('player', {
+        height: '315',
+        width: '560',
+        videoId: 'd33ZtNQoZQM&list=OLAK5uy_mWL5i-CQx_e04azInjKQyMQxFkokh7qvw',
         events: {
           'onStateChange': onPlayerStateChange
         }
@@ -112,25 +103,19 @@
 
     function onPlayerStateChange(event) {
       const background = document.getElementById('background');
-      const videoContainer = event.target.a; // Get the video container
+      const videoContainer = document.getElementById('player');
 
       if (event.data === YT.PlayerState.PLAYING) {
         // When the video is playing
-        videoContainer.style.width = '75%';
-        videoContainer.style.height = '75%';
+        videoContainer.style.transform = 'translate(-50%, -50%) scale(1.34)';
         background.classList.add('blur-bg');
       } else if (event.data === YT.PlayerState.PAUSED || event.data === YT.PlayerState.ENDED) {
         // When the video is paused or ended
-        videoContainer.style.width = videoWidth + 'px';
-        videoContainer.style.height = videoHeight + 'px';
+        videoContainer.style.transform = 'translate(-50%, -50%) scale(1)';
         background.classList.remove('blur-bg');
       }
     }
-
-    // Create multiple YT.Player objects
-    createPlayer('OcWEYDddJ7Q', 'player1');
-    createPlayer('d33ZtNQoZQM&list=OLAK5uy_mWL5i-CQx_e04azInjKQyMQxFkokh7qvw', 'player2');
-    // More players here
   </script>
 </body>
 </html>
+
