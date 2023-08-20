@@ -1,59 +1,14 @@
-
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>hUH</title>
+  <title>YouTube Video Embedding</title>
   <style>
     body {
       background-image: url('https://imgur.com/VdeFST7'); /* Replace with your background image URL */
       background-size: cover;
       background-repeat: no-repeat;
-      transition: filter 0.5s;
-    }
-    .blur-background {
-      filter: blur(10px);
-    }
-    .navbar {
-      position: absolute;
-      top: 0;
-      right: 0;
-      padding: 15px;
-    }
-    .dropdown {
-      position: relative;
-      display: inline-block;
-    }
-    .dropdown-content {
-      display: none;
-      position: absolute;
-      right: 0;
-      background-color: #f9f9f9;
-      min-width: 160px;
-      box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-      z-index: 1;
-    }
-    .dropdown-content a {
-      color: black;
-      padding: 12px 16px;
-      text-decoration: none;
-      display: block;
-    }
-    .dropdown-content a:hover {
-      background-color: #f1f1f1;
-    }
-    .dropdown:hover .dropdown-content {
-      display: block;
-    }
-    .search-bar {
-      position: absolute;
-      top: 60%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      text-align: center;
     }
     .video-container {
       position: absolute;
@@ -62,52 +17,12 @@
       transform: translate(-50%, -50%);
       width: 200px;
       height: 112px;
-      transition: all 0.5s;
-    }
-    .enlarge-video {
-      width: 75% !important;
-      height: 42% !important;
-      position: absolute !important;
-      z-index: 1;
     }
   </style>
 </head>
 <body>
-  <div class="navbar">
-    <div class="dropdown">
-      <span>Menu</span>
-      <div class="dropdown-content">
-        <a href="#">Option 1</a>
-        <a href="#">Option 2</a>
-        <a href="#">Option 3</a>
-      </div>
-    </div>
+  <div class="video-container">
+    <iframe width="200" height="112" src="https://www.youtube.com/watch?v=OcWEYDddJ7Q" frameborder="0" allowfullscreen></iframe>
   </div>
-  <div class="video-container" onclick="toggleVideo(this)">
-    <iframe id="video" width="200" height="112" src="https://www.youtube.com/watch?v=OcWEYDddJ7Q" frameborder="0" allowfullscreen></iframe>
-  </div>
-  <div class="search-bar">
-    <input type="text" placeholder="Search">
-    <button type="submit">Search</button>
-  </div>
-  <script>
-    function toggleVideo(container) {
-      var video = document.getElementById('video');
-      if (video.paused) {
-        container.classList.remove('enlarge-video');
-        document.body.classList.remove('blur-background');
-      } else {
-        container.classList.add('enlarge-video');
-        document.body.classList.add('blur-background');
-      }
-    }
-
-    var video = document.getElementById('video');
-    video.addEventListener('ended', function() {
-      var container = video.parentElement;
-      container.classList.remove('enlarge-video');
-      document.body.classList.remove('blur-background');
-    });
-  </script>
 </body>
 </html>
