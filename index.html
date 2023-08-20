@@ -6,7 +6,7 @@
     <title>Your Website</title>
     <style>
         body {
-            background-image: url('https://imgur.com/VdeFST7');
+            background-image: url('https://imgur.com/VdeFST7.jpg');
             background-size: cover;
             background-position: center;
             margin: 0;
@@ -37,7 +37,7 @@
         }
 
         .embed-video {
-            width: 18%; /* Accommodate 5 videos */
+            width: 18%;
             margin: 1%;
         }
 
@@ -54,11 +54,13 @@
 </head>
 <body>
     <div class="container">
-        <input type="text" class="search-bar" placeholder="Search...">
+        <form onsubmit="handleSearch(event)">
+            <input type="text" id="search-bar" class="search-bar" placeholder="Search...">
+            <input type="submit" value="Search">
+        </form>
         <select class="drop-down">
             <option value="option1">Option 1</option>
             <option value="option2">Option 2</option>
-            <!-- Add more options here -->
         </select>
         <div class="video-row">
             <iframe class="embed-video" src="https://www.youtube.com/embed/sCwUw3sGIno" frameborder="0" allowfullscreen></iframe>
@@ -67,8 +69,35 @@
             <iframe class="embed-video" src="https://www.youtube.com/embed/sd3_E-Xblak" frameborder="0" allowfullscreen></iframe>
             <iframe class="embed-video" src="https://www.youtube.com/embed/A3DT421CcYw" frameborder="0" allowfullscreen></iframe>
         </div>
+        <div id="results"></div>
     </div>
     <script>
+        const apiKey = 'YOUR_API_KEY_HERE';
+
+        function searchBing(query) {
+            const url = `https://api.bing.microsoft.com/v7.0/search?q=${query}`;
+            fetch(url, {
+                headers: {
+                    'Ocp-Apim-Subscription-Key': apiKey
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                const resultsDiv = document.getElementById('results');
+                resultsDiv.innerHTML = '';
+                data.webPages.value.forEach(result => {
+                    resultsDiv.innerHTML += `<a href="${result.url}">${result.name}</a><br>`;
+                });
+            })
+            .catch(error => console.error('An error occurred:', error));
+        }
+
+        function handleSearch(event) {
+            event.preventDefault();
+            const query = document.getElementById('search-bar').value;
+            searchBing(query);
+        }
+
         const videos = document.querySelectorAll('.embed-video');
         const body = document.querySelector('body');
 
