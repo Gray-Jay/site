@@ -56,6 +56,9 @@
       width: 560px;
       height: 315px;
     }
+    .blur-bg {
+      filter: blur(5px);
+    }
   </style>
   <script src="https://www.youtube.com/iframe_api"></script>
 </head>
@@ -70,9 +73,7 @@
       </div>
     </div>
   </div>
-  <div class="video-container">
-    <div id="player"></div>
-  </div>
+  <div class="video-container" id="player"></div>
   <div class="search-bar">
     <input type="text" placeholder="Search">
     <button type="submit">Search</button>
@@ -92,18 +93,18 @@
 
     function onPlayerStateChange(event) {
       const body = document.body;
-      const videoContainer = document.querySelector('.video-container');
+      const videoContainer = document.getElementById('player');
 
       if (event.data === YT.PlayerState.PLAYING) {
         // When the video is playing
-        videoContainer.style.width = '75%';
-        videoContainer.style.height = '75%';
-        body.style.filter = 'blur(5px)';
+        videoContainer.style.width = '75vw';
+        videoContainer.style.height = '75vh';
+        body.classList.add('blur-bg');
       } else if (event.data === YT.PlayerState.PAUSED || event.data === YT.PlayerState.ENDED) {
         // When the video is paused or ended
         videoContainer.style.width = '560px';
         videoContainer.style.height = '315px';
-        body.style.filter = 'none';
+        body.classList.remove('blur-bg');
       }
     }
   </script>
