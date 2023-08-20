@@ -6,23 +6,75 @@
   <title>YouTube Video Embedding</title>
   <style>
     body {
-      background-image: url('https://imgur.com/VdeFST7'); /* Replace with your background image URL */
+      background-image: url('https://i.imgur.com/VdeFST7.jpg');
       background-size: cover;
       background-repeat: no-repeat;
+    }
+    .navbar {
+      position: absolute;
+      top: 0;
+      right: 0;
+      padding: 15px;
+    }
+    .dropdown {
+      position: relative;
+      display: inline-block;
+    }
+    .dropdown-content {
+      display: none;
+      position: absolute;
+      right: 0;
+      background-color: #f9f9f9;
+      min-width: 160px;
+      box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+      z-index: 1;
+    }
+    .dropdown-content a {
+      color: black;
+      padding: 12px 16px;
+      text-decoration: none;
+      display: block;
+    }
+    .dropdown-content a:hover {
+      background-color: #f1f1f1;
+    }
+    .dropdown:hover .dropdown-content {
+      display: block;
+    }
+    .search-bar {
+      position: absolute;
+      top: 60%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center;
     }
     .video-container {
       position: absolute;
       top: 30%;
       left: 50%;
       transform: translate(-50%, -50%);
-      width: 200px;
-      height: 112px;
+      width: 560px;
+      height: 315px;
     }
   </style>
 </head>
 <body>
+  <div class="navbar">
+    <div class="dropdown">
+      <span>Menu</span>
+      <div class="dropdown-content">
+        <a href="#">Option 1</a>
+        <a href="#">Option 2</a>
+        <a href="#">Option 3</a>
+      </div>
+    </div>
+  </div>
   <div class="video-container">
-    <iframe width="200" height="112" src="https://www.youtube.com/watch?v=OcWEYDddJ7Q" frameborder="0" allowfullscreen></iframe>
+    <iframe width="560" height="315" src="https://www.youtube.com/embed/OcWEYDddJ7Q" frameborder="0" allowfullscreen></iframe>
+  </div>
+  <div class="search-bar">
+    <input type="text" placeholder="Search">
+    <button type="submit">Search</button>
   </div>
 </body>
 </html>
