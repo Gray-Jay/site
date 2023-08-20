@@ -15,6 +15,7 @@
         .container {
             text-align: center;
             max-width: 100%;
+            position: relative;
         }
 
         .search-bar {
@@ -39,6 +40,15 @@
         .embed-video {
             width: 18%;
             margin: 1%;
+            transition: all 0.5s ease;
+        }
+
+        .playing {
+            width: 75% !important;
+            position: fixed !important;
+            left: 12.5% !important;
+            top: 10% !important;
+            z-index: 1000 !important;
         }
 
         @media (max-width: 600px) {
@@ -104,16 +114,12 @@
         videos.forEach(video => {
             video.addEventListener('play', () => {
                 body.style.filter = 'blur(5px)';
-                video.style.width = '75%';
-                video.style.position = 'fixed';
-                video.style.left = '12.5%';
-                video.style.top = '10%';
+                video.classList.add('playing');
             });
 
             video.addEventListener('pause', () => {
                 body.style.filter = 'none';
-                video.style.width = '18%';
-                video.style.position = 'static';
+                video.classList.remove('playing');
             });
         });
     </script>
