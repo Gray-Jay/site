@@ -1,82 +1,79 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>YouTube Video Embedding</title>
+  <style>
+    body {
+      background-image: url('background.jpg'); /* Replace with your background image URL */
+      background-size: cover;
+      background-repeat: no-repeat;
+      transition: filter 0.5s;
+    }
+    .blur-background {
+      filter: blur(10px);
+    }
+    .navbar {
+      position: absolute;
+      top: 0;
+      right: 0;
+      padding: 15px;
+    }
+    /* Drop-down styles */
+    /* ... */
+    .search-bar {
+      position: absolute;
+      top: 60%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+    }
+    .video-container {
+      position: absolute;
+      top: 30%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 200px;
+      height: 112px;
+      transition: all 0.5s;
+    }
+    .enlarge-video {
+      width: 75% !important;
+      height: 42% !important;
+      position: absolute !important;
+      z-index: 1;
+    }
+  </style>
+</head>
+<body>
+  <div class="navbar">
+    <!-- Navbar content -->
+  </div>
+  <div class="video-container" onclick="toggleVideo(this)">
+    <iframe id="video" width="200" height="112" src="https://www.youtube.com/embed/VIDEO_ID" frameborder="0" allowfullscreen></iframe>
+  </div>
+  <div class="search-bar">
+    <!-- Search bar content -->
+  </div>
+  <script>
+    function toggleVideo(container) {
+      var video = document.getElementById('video');
+      if (video.paused) {
+        container.classList.remove('enlarge-video');
+        document.body.classList.remove('blur-background');
+      } else {
+        container.classList.add('enlarge-video');
+        document.body.classList.add('blur-background');
+      }
+    }
 
-  <head>
-    <title> My First Resume
-    </title>
-    <link rel="stylesheet" type="text/css" href="style.css">
-  </head>
-
-  <body>
-    <div id="banner">
-      <p>Jordan Fink</p>
-      <p>f</p>
-    </div>
-    <nav>
-      <ul class="nav">
-        <li class="navbar">
-				<a class="navbarlinks" href="">About</a>        
-			<span class="dropdown"><span>Portfolio<span class="dropdowncontent"><a class="navbarlinks" href="https://gray-jay.github.io/site/">Github</a></span></span></span>
-        <a class="navbarlinks" href="">Experience</a>
-        <a class="navbarlinks" href="https://lmgtfy.app/?q=you+dirty+dog!">Porn</a>
-				</li>
-      </ul>
-    </nav>
-    <p class="jobtitle">Software Engineer</p>
-		<br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-    <div class="profilepic"></div>
-    <h2><i><u>Experience</u></i></h2>
-    <ul>
-      <li><b>Student</b></li>
-      <p>-Currently learning through <a class="sololink" href="https://www.sololearn.com" target="_blank">SoloLearn </a></p>
-      <div id="parent">
-        <p>
-          This is a summary of my coding and programming experience. I am currently learning CSS through SoloLearn. I am going to write more in here so that the scroll bar works. I still need a few more words so that the scroll bar really functions nicely.
-        </p>
-        <p>248-7**-0*** <br>
-          Myemail@email.com
-        </p>
-      </div>
-    </ul>
-    <i>Skills:</i>
-    <table class="table" border="3">
-      <tr>
-        <th style="color:#990000" align="center">HTML</th>
-        <th align="center">Completed</th>
-      </tr>
-      <tr>
-        <td style="color:green" align="center">CSS</td>
-        <th align="center">Completed</th>
-      </tr>
-      <tr>
-        <td style="color:#0000ff" align="center">JavaScript</td>
-        <th align="center"><progress min="0" max="100" value="0"></progress></th>
-      </tr>
-      <tr>
-        <th style="color:#777777" align="center">Python</th>
-        <th align="center"><progress min="0" max="100" value="4.5"></progress></th>
-      </tr>
-    </table><br />
-    <div class="certs"></div>
-    <div class="certs1"></div>
-    <p><i>Contacts & References:</i><br /></p>
-    <a href="https://www.linkedin.com" target="_blank">
-      <font size="-.5">Linkedin</font>
-    </a><br />
-    <a href="https://www.monster.com" target="_blank">
-      <font size="-.5">Monster</font>
-    </a><br />
-    <div class="emailme">
-      <form style="margin: 0; padding: 0;" method="post" action="mailto:jordan1fink@gmail.com">
-        <p><B>Write Me a Message</B>
-          <input type="submit" value="Open Email Client"></p>
-      </form>
-    </div>
-    <br>
-    <a href='http://www.freevisitorcounters.com'>freevisitorcounters.com</a>
-    <script type='text/javascript' src='https://www.freevisitorcounters.com/auth.php?id=be2825ced062b51a905f55265c39454621082145'></script>
-    <script type="text/javascript" src="https://www.freevisitorcounters.com/en/home/counter/864579/t/13"></script>
-    <p>The Premiere Modern Coder.</p>
-  </body>
-
+    var video = document.getElementById('video');
+    video.addEventListener('ended', function() {
+      var container = video.parentElement;
+      container.classList.remove('enlarge-video');
+      document.body.classList.remove('blur-background');
+    });
+  </script>
+</body>
 </html>
