@@ -1,126 +1,198 @@
+
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Your Website</title>
+    <title>Snake Game</title>
     <style>
-        body {
-            background-image: url('https://imgur.com/VdeFST7.jpg');
-            background-size: cover;
-            background-position: center;
-            margin: 0;
+        #game-board {
+            width: 300px;
+            height: 300px;
+            border: 1px solid #000;
+            display: grid;
+            grid-template-columns: repeat(30, 10px);
+            grid-template-rows: repeat(30, 10px);
         }
 
-        .container {
-            text-align: center;
-            max-width: 100%;
-            position: relative;
+        .snake {
+            background-color: green;
         }
 
-        .search-bar {
-            width: 50%;
-            margin-top: 10px;
-            text-align: center;
-        }
-
-        .drop-down {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-        }
-
-        .video-row {
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-            margin: 20px;
-        }
-
-        .embed-video {
-            width: 18%;
-            margin: 1%;
-            transition: all 0.5s ease;
-        }
-
-        .playing {
-            width: 75% !important;
-            position: fixed !important;
-            left: 12.5% !important;
-            top: 10% !important;
-            z-index: 1000 !important;
-        }
-
-        @media (max-width: 600px) {
-            .search-bar {
-                width: 90%;
-            }
-
-            .embed-video {
-                width: 90%;
-            }
+        .food {
+            background-color: red;
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <form onsubmit="handleSearch(event)">
-            <input type="text" id="search-bar" class="search-bar" placeholder="Search...">
-            <input type="submit" value="Search">
-        </form>
-        <select class="drop-down">
-            <option value="option1">Option 1</option>
-            <option value="option2">Option 2</option>
-        </select>
-        <div class="video-row">
-            <iframe class="embed-video" src="https://www.youtube.com/embed/sCwUw3sGIno" frameborder="0" allowfullscreen></iframe>
-            <iframe class="embed-video" src="https://www.youtube.com/embed/bRA9BJ9BQPE" frameborder="0" allowfullscreen></iframe>
-            <iframe class="embed-video" src="https://www.youtube.com/embed/FNvjT1sPQLY" frameborder="0" allowfullscreen></iframe>
-            <iframe class="embed-video" src="https://www.youtube.com/embed/sd3_E-Xblak" frameborder="0" allowfullscreen></iframe>
-            <iframe class="embed-video" src="https://www.youtube.com/embed/A3DT421CcYw" frameborder="0" allowfullscreen></iframe>
-        </div>
-        <div id="results"></div>
-    </div>
+    <h1>Snake Game</h1>
+    <p>Score: <span id="score">0</span></p>
+    <p>High Score: <span id="high-score">0</span></p>
+    <div id="game-board"></div>
+    <button id="start-button">Start Game</button>
+
     <script>
-        const apiKey = 'YOUR_API_KEY_HERE';
+        const gameBoard = document.getElementById("game-board");
+        const scoreDisplay = document.getElementById("score");
+        const highScoreDisplay = document.getElementById("high-score");
+        const startButton = document.getElementById("start-button");
 
-        function searchBing(query) {
-            const url = `https://api.bing.microsoft.com/v7.0/search?q=${query}`;
-            fetch(url, {
-                headers: {
-                    'Ocp-Apim-Subscription-Key': apiKey
-                }
-            })
-            .then(response => response.json())
-            .then(data => {
-                const resultsDiv = document.getElementById('results');
-                resultsDiv.innerHTML = '';
-                data.webPages.value.forEach(result => {
-                    resultsDiv.innerHTML += `<a href="${result.url}">${result.name}</a><br>`;
-                });
-            })
-            .catch(error => console.error('An error occurred:', error));
+        const gridSize = 30;
+        const snakeSpeed = 100;
+
+        let snake = [{ x: 10, y: 10 }];
+        let food = { x: 5, y: 5 };
+        let score = 0;
+        let highScore = 0;
+        let direction = "right";
+        let gameRunning = false;
+        let gameInterval;
+
+        function getRandomPosition() {
+            return Math.floor(Math.random() * gridSize) + 1;
         }
 
-        function handleSearch(event) {
-            event.preventDefault();
-            const query = document.getElementById('search-bar').value;
-            searchBing(query);
+        function updateHighScore() {
+            if (score > highScore) {
+                highScore = score;
+                highScoreDisplay.textContent = highScore;
+            }
         }
 
-        const videos = document.querySelectorAll('.embed-video');
-        const body = document.querySelector('body');
+        function draw() {
+            gameBoard.innerHTML = "";
 
-        videos.forEach(video => {
-            video.addEventListener('play', () => {
-                body.style.filter = 'blur(5px)';
-                video.classList.add('playing');
+            snake.forEach(segment => {
+                const snakeSegment = document.createElement("div");
+                snakeSegment.style.gridRowStart = segment.y;
+                snakeSegment.style.gridColumnStart = segment.x;
+                snakeSegment.classList.add("snake");
+                gameBoard.appendChild(snakeSegment);
             });
 
-            video.addEventListener('pause', () => {
-                body.style.filter = 'none';
-                video.classList.remove('playing');
-            });
+            const foodItem = document.createElement("div");
+            foodItem.style.gridRowStart = food.y;
+            foodItem.style.gridColumnStart = food.x;
+            foodItem.classList.add("food");
+            gameBoard.appendChild(foodItem);
+        }
+
+        function move() {
+            const head = { ...snake[0] };
+
+            switch (direction) {
+                case "up":
+                    head.y -= 1;
+                    break;
+                case "down":
+                    head.y += 1;
+                    break;
+                case "left":
+                    head.x -= 1;
+                    break;
+                case "right":
+                    head.x += 1;
+                    break;
+            }
+
+            snake.unshift(head);
+
+            if (head.x === food.x && head.y === food.y) {
+                score += 10;
+                scoreDisplay.textContent = score;
+                food = { x: getRandomPosition(), y: getRandomPosition() };
+            } else {
+                snake.pop();
+            }
+        }
+
+        function gameOver() {
+            gameRunning = false;
+            clearInterval(gameInterval);
+            alert("Game Over! Your Score: " + score);
+            updateHighScore();
+            resetGame();
+        }
+
+        function resetGame() {
+            snake = [{ x: 10, y: 10 }];
+            food = { x: getRandomPosition(), y: getRandomPosition() };
+            score = 0;
+            scoreDisplay.textContent = score;
+            direction = "right";
+            startButton.disabled = false;
+        }
+
+        document.addEventListener("keydown", event => {
+            if (!gameRunning) return;
+
+            switch (event.key) {
+                case "ArrowUp":
+                    if (direction !== "down") direction = "up";
+                    break;
+                case "ArrowDown":
+                    if (direction !== "up") direction = "down";
+                    break;
+                case "ArrowLeft":
+                    if (direction !== "right") direction = "left";
+                    break;
+                case "ArrowRight":
+                    if (direction !== "left") direction = "right";
+                    break;
+            }
+        });
+
+        startButton.addEventListener("click", () => {
+            if (!gameRunning) {
+                gameRunning = true;
+                startButton.disabled = true;
+                snake = [{ x: 10, y: 10 }];
+                food = { x: getRandomPosition(), y: getRandomPosition() };
+                score = 0;
+                scoreDisplay.textContent = score;
+                direction = "right";
+                gameInterval = setInterval(() => {
+                    move();
+                    draw();
+
+                    if (isCollision()) {
+                        gameOver();
+                    }
+                }, snakeSpeed);
+            }
+        });
+
+        function isCollision() {
+            const head = snake[0];
+            return (
+                head.x < 1 ||
+                head.y < 1 ||
+                head.x > gridSize ||
+                head.y > gridSize ||
+                snake.slice(1).some(segment => segment.x === head.x && segment.y === head.y)
+            );
+        }
+        // Add touch event listeners for mobile swipes
+        let touchStartX = 0;
+        let touchStartY = 0;
+
+        document.addEventListener('touchstart', (event) => {
+            touchStartX = event.touches[0].clientX;
+            touchStartY = event.touches[0].clientY;
+        });
+
+        document.addEventListener('touchend', (event) => {
+            const touchEndX = event.changedTouches[0].clientX;
+            const touchEndY = event.changedTouches[0].clientY;
+
+            const deltaX = touchEndX - touchStartX;
+            const deltaY = touchEndY - touchStartY;
+
+            if (Math.abs(deltaX) > Math.abs(deltaY)) {
+                if (deltaX > 0 && direction !== "left") direction = "right";
+                else if (deltaX < 0 && direction !== "right") direction = "left";
+            } else {
+                if (deltaY > 0 && direction !== "up") direction = "down";
+                else if (deltaY < 0 && direction !== "down") direction = "up";
+            }
         });
     </script>
 </body>
