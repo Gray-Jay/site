@@ -2,20 +2,10 @@
 <html>
 <head>
     <title>Snake Game</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
-        body {
-            font-family: Arial, sans-serif;
-        }
-
-        #game-container {
-            max-width: 300px;
-            margin: 0 auto;
-            text-align: center;
-        }
-
         #game-board {
-            width: 100%;
+            width: 300px;
+            height: 300px;
             border: 1px solid #000;
             display: grid;
             grid-template-columns: repeat(30, 10px);
@@ -29,30 +19,23 @@
         .food {
             background-color: red;
         }
-
-        button {
-            margin-top: 10px;
-        }
     </style>
 </head>
 <body>
-    <div id="game-container">
-        <h1>Snake Game</h1>
-        <p>Score: <span id="score">0</span></p>
-        <p>High Score: <span id="high-score">0</span></p>
-        <div id="game-board"></div>
-        <button id="start-button">Start Game</button>
-    </div>
+    <h1>Snake Game</h1>
+    <p>Score: <span id="score">0</span></p>
+    <p>High Score: <span id="high-score">0</span></p>
+    <div id="game-board"></div>
+    <button id="start-button">Start Game</button>
 
     <script>
-        const gameContainer = document.getElementById("game-container");
         const gameBoard = document.getElementById("game-board");
         const scoreDisplay = document.getElementById("score");
         const highScoreDisplay = document.getElementById("high-score");
         const startButton = document.getElementById("start-button");
 
         const gridSize = 30;
-        const snakeSpeed = 100;
+        const snakeSpeed = 500;
 
         let snake = [{ x: 10, y: 10 }];
         let food = { x: 5, y: 5 };
@@ -156,21 +139,16 @@
             }
         });
 
-        // Mobile touchscreen functionality
-        let touchStartX = 0;
-        let touchStartY = 0;
+        gameBoard.addEventListener("click", event => {
+            if (!gameRunning) return;
 
-        document.addEventListener('touchstart', (event) => {
-            touchStartX = event.touches[0].clientX;
-            touchStartY = event.touches[0].clientY;
-        });
+            const boardRect = gameBoard.getBoundingClientRect();
+            const clickX = event.clientX - boardRect.left;
+            const clickY = event.clientY - boardRect.top;
 
-        document.addEventListener('touchend', (event) => {
-            const touchEndX = event.changedTouches[0].clientX;
-            const touchEndY = event.changedTouches[0].clientY;
-
-            const deltaX = touchEndX - touchStartX;
-            const deltaY = touchEndY - touchStartY;
+            const head = snake[0];
+            const deltaX = clickX - (head.x * 10);
+            const deltaY = clickY - (head.y * 10);
 
             if (Math.abs(deltaX) > Math.abs(deltaY)) {
                 if (deltaX > 0 && direction !== "left") direction = "right";
@@ -181,7 +159,6 @@
             }
         });
 
-        // Event listener for the Start Game button
         startButton.addEventListener("click", () => {
             if (!gameRunning) {
                 gameRunning = true;
