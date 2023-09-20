@@ -2,6 +2,7 @@
 <html>
 <head>
     <title>Snake Game</title>
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <style>
         #game-board {
             width: 300px;
@@ -139,21 +140,16 @@
             }
         });
 
-        // Mobile touchscreen functionality
-        let touchStartX = 0;
-        let touchStartY = 0;
+        gameBoard.addEventListener("click", event => {
+            if (!gameRunning) return;
 
-        document.addEventListener('touchstart', (event) => {
-            touchStartX = event.touches[0].clientX;
-            touchStartY = event.touches[0].clientY;
-        });
+            const boardRect = gameBoard.getBoundingClientRect();
+            const clickX = event.clientX - boardRect.left;
+            const clickY = event.clientY - boardRect.top;
 
-        document.addEventListener('touchend', (event) => {
-            const touchEndX = event.changedTouches[0].clientX;
-            const touchEndY = event.changedTouches[0].clientY;
-
-            const deltaX = touchEndX - touchStartX;
-            const deltaY = touchEndY - touchStartY;
+            const head = snake[0];
+            const deltaX = clickX - (head.x * 10);
+            const deltaY = clickY - (head.y * 10);
 
             if (Math.abs(deltaX) > Math.abs(deltaY)) {
                 if (deltaX > 0 && direction !== "left") direction = "right";
