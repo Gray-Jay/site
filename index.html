@@ -1,12 +1,21 @@
-
 <!DOCTYPE html>
 <html>
 <head>
     <title>Snake Game</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        #game-container {
+            max-width: 300px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
         #game-board {
-            width: 300px;
-            height: 300px;
+            width: 100%;
             border: 1px solid #000;
             display: grid;
             grid-template-columns: repeat(30, 10px);
@@ -20,16 +29,23 @@
         .food {
             background-color: red;
         }
+
+        button {
+            margin-top: 10px;
+        }
     </style>
 </head>
 <body>
-    <h1>Snake Game</h1>
-    <p>Score: <span id="score">0</span></p>
-    <p>High Score: <span id="high-score">0</span></p>
-    <div id="game-board"></div>
-    <button id="start-button">Start Game</button>
+    <div id="game-container">
+        <h1>Snake Game</h1>
+        <p>Score: <span id="score">0</span></p>
+        <p>High Score: <span id="high-score">0</span></p>
+        <div id="game-board"></div>
+        <button id="start-button">Start Game</button>
+    </div>
 
     <script>
+        const gameContainer = document.getElementById("game-container");
         const gameBoard = document.getElementById("game-board");
         const scoreDisplay = document.getElementById("score");
         const highScoreDisplay = document.getElementById("high-score");
@@ -140,6 +156,32 @@
             }
         });
 
+        // Mobile touchscreen functionality
+        let touchStartX = 0;
+        let touchStartY = 0;
+
+        document.addEventListener('touchstart', (event) => {
+            touchStartX = event.touches[0].clientX;
+            touchStartY = event.touches[0].clientY;
+        });
+
+        document.addEventListener('touchend', (event) => {
+            const touchEndX = event.changedTouches[0].clientX;
+            const touchEndY = event.changedTouches[0].clientY;
+
+            const deltaX = touchEndX - touchStartX;
+            const deltaY = touchEndY - touchStartY;
+
+            if (Math.abs(deltaX) > Math.abs(deltaY)) {
+                if (deltaX > 0 && direction !== "left") direction = "right";
+                else if (deltaX < 0 && direction !== "right") direction = "left";
+            } else {
+                if (deltaY > 0 && direction !== "up") direction = "down";
+                else if (deltaY < 0 && direction !== "down") direction = "up";
+            }
+        });
+
+        // Event listener for the Start Game button
         startButton.addEventListener("click", () => {
             if (!gameRunning) {
                 gameRunning = true;
@@ -170,30 +212,6 @@
                 snake.slice(1).some(segment => segment.x === head.x && segment.y === head.y)
             );
         }
-        // Add touch event listeners for mobile swipes
-        let touchStartX = 0;
-        let touchStartY = 0;
-
-        document.addEventListener('touchstart', (event) => {
-            touchStartX = event.touches[0].clientX;
-            touchStartY = event.touches[0].clientY;
-        });
-
-        document.addEventListener('touchend', (event) => {
-            const touchEndX = event.changedTouches[0].clientX;
-            const touchEndY = event.changedTouches[0].clientY;
-
-            const deltaX = touchEndX - touchStartX;
-            const deltaY = touchEndY - touchStartY;
-
-            if (Math.abs(deltaX) > Math.abs(deltaY)) {
-                if (deltaX > 0 && direction !== "left") direction = "right";
-                else if (deltaX < 0 && direction !== "right") direction = "left";
-            } else {
-                if (deltaY > 0 && direction !== "up") direction = "down";
-                else if (deltaY < 0 && direction !== "down") direction = "up";
-            }
-        });
     </script>
 </body>
 </html>
